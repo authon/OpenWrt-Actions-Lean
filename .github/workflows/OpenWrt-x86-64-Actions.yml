@@ -1,1 +1,133 @@
 #20200214  authon
+#=================================================
+# https://github.com/P3TERX/Actions-OpenWrt
+# Description: Build OpenWrt using GitHub Actions
+# Lisence: MIT
+# Author: P3TERX
+# Blog: https://p3terx.com
+#=================================================
+
+name: OpenWrt-x86-64-Actions
+
+on:
+# 定时触发
+   schedule:
+      - cron: 0 18 * * *
+
+# release触发
+#  release:
+#    types: [published]
+
+# 点赞触发
+   watch:
+      types: [started]
+
+# 编辑触发
+#  push:
+#    branches: 
+#      - master
+
+# config触发
+#  paths:
+#    - 'x86_64.config'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 校验本地文件
+      uses: actions/checkout@master
+
+    - name: 初始化编译环境
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      # run: |
+        # echo "Deleting files, please wait ..."
+        # sudo rm -rf /usr/share/dotnet /etc/apt/sources.list.d/*
+        # sudo swapoff /swapfile
+        # sudo rm -f /swapfile
+        # #docker rmi `docker images -q`
+        # #sudo -E apt-get -q purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php*
+        # sudo -E apt-get -qq update
+        # sudo -E apt-get -qq install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler
+        # sudo -E apt-get -qq autoremove --purge
+        # sudo -E apt-get -qq clean
+        # curl -fsSL https://raw.githubusercontent.com/P3TERX/dotfiles/master/.bashrc >> ~/.bashrc
+        # sudo ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+        
+      run: |
+        echo "Deleting files, please wait ..."
+        sudo -E apt-get -qq update
+        sudo -E apt-get -qq install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler
+        sudo ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime  
+      
+    - name: 克隆源代码
+      env: 
+        REPO_URL: https://github.com/Lienol/openwrt
+        REPO_BRANCH: dev-lean-lede
+      run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
+
+    # - name: 加入软件库
+      # run: |
+        # sed -i '$a src-git vernesong https://github.com/vernesong/OpenClash' openwrt/feeds.conf.default
+        # sed -i '$a src-git KFERMercer https://github.com/KFERMercer/luci-app-serverchan' openwrt/feeds.conf.default
+        # sed -i '$a src-git rufengsuixing https://github.com/rufengsuixing/luci-app-adguardhome' openwrt/feeds.conf.default
+
+    - name: 更新源
+      run: cd openwrt && ./scripts/feeds update -a
+
+    - name: 安装源
+      run: cd openwrt && ./scripts/feeds install -a
+
+    - name: 创建自定义配置文件 - OpenWrt-x86-64
+      env:
+        DIY_SH: 'OpenWrt-x86-64.sh'
+      run: |
+        [ -e files ] && mv files openwrt/files
+        chmod +x $DIY_SH
+        cd openwrt
+        ../$DIY_SH
+        make defconfig
+
+#      开启SSH远程连接
+#    - name: SSH connection to Actions
+#      uses: P3TERX/debugger-action@master
+
+    - name: 下载软件包
+      run: |
+        cd openwrt && make download -j8
+        find dl -size -1024c -exec ls -l {} \;
+        find dl -size -1024c -exec rm -f {} \;
+
+    - name: 多线程编译
+      run: |
+        cd openwrt
+        echo -e "$(nproc) thread compile"
+        make -j$(nproc)
+
+    - name: 多线程编译失败，尝试单线程编译
+      if: failure()
+      run: |
+        cd openwrt
+        make -j1 V=s
+
+    - name: 上传BIN目录
+      uses: actions/upload-artifact@master
+      if: always()
+      with:
+        name: OpenWrt_bin
+        path: openwrt/bin
+
+    - name: 整理文件
+      run: |
+          rm -rf ./artifact/
+          mkdir -p ./artifact/
+          find openwrt/bin/targets/ -name "*combined*img*" | xargs -i mv -f {} ./artifact/
+          find openwrt/bin/targets/ -name "*uefi*img*" | xargs -i mv -f {} ./artifact/
+
+    - name: 上传固件
+      uses: actions/upload-artifact@master
+      with:
+        name: OpenWrt_firmware
+        path: ./artifact/
