@@ -17,7 +17,7 @@ sed -i 's/192.168.1.1/10.10.10.1/g' package/base-files/files/bin/config_generate
 # 添加第三方软件包
 git clone https://github.com/KFERMercer/luci-app-serverchan package/luci-app-serverchan
 git clone https://github.com/rufengsuixing/luci-app-adguardhome package/luci-app-adguardhome
-# git clone https://github.com/vernesong/OpenClash package/luci-app-OpenClash
+git clone https://github.com/vernesong/OpenClash package/luci-app-OpenClash
 
 #创建自定义配置文件 - OpenWrt-x86-64
 
@@ -109,7 +109,7 @@ EOF
 cat >> .config <<EOF
 CONFIG_PACKAGE_luci-app-serverchan=y #微信推送
 CONFIG_PACKAGE_luci-app-adguardhome=y #ADguardHome去广告服务
-# CONFIG_PACKAGE_luci-app-openclash=y
+CONFIG_PACKAGE_luci-app-openclash=y
 EOF
 
 # lienol插件选择:
