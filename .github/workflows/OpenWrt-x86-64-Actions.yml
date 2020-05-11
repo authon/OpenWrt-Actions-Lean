@@ -37,7 +37,7 @@ on:
 
 env:
   REPO_URL: https://github.com/Lienol/openwrt
-  REPO_BRANCH: dev-lean-lede
+  REPO_BRANCH: dev-19.07
   DIY_SH: OpenWrt-x86-64.sh
   FREE_UP_DISK: false
   SSH_ACTIONS: false
