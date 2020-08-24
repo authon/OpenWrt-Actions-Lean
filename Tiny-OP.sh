@@ -17,7 +17,7 @@ cd openwrt
 git clone https://github.com/kenzok8/openwrt-packages package/openwrt-packages
 git clone https://github.com/destan19/OpenAppFilter package/OpenAppFilter
 git clone https://github.com/tty228/luci-app-serverchan package/luci-app-serverchan
-git clone https://github.com/pymumu/luci-app-smartdns package/luci-app-smartdns
+# git clone https://github.com/pymumu/luci-app-smartdns package/luci-app-smartdns
 git clone https://github.com/garypang13/luci-theme-edge package/luci-theme-edge -b 18.06
 
 # 替换更新默认argon主题
@@ -29,14 +29,15 @@ rm -rf package/openwrt-packages/luci-app-ssr-plus && svn co https://github.com/f
 
 # 添加passwall依赖库
 # git clone https://github.com/kenzok8/small package/small
-svn co https://github.com/Lienol/openwrt-package/trunk/package package/small
+svn co https://github.com/xiaorouji/openwrt-package/trunk/package package/small
 
 # 添加Lienol主题及软件
-svn co https://github.com/Lienol/openwrt-package/trunk/lienol/luci-app-fileassistant package/luci-app-fileassistant
-svn co https://github.com/Lienol/openwrt-package/trunk/lienol/luci-app-filebrowser package/luci-app-filebrowser
-svn co https://github.com/Lienol/openwrt-package/trunk/lienol/luci-theme-argon-dark-mod package/luci-theme-argon-dark-mod
-svn co https://github.com/Lienol/openwrt-package/trunk/lienol/luci-theme-argon-light-mod package/luci-theme-argon-light-mod
-svn co https://github.com/Lienol/openwrt-package/trunk/lienol/luci-theme-bootstrap-mod package/luci-theme-bootstrap-mod
+svn co https://github.com/xiaorouji/openwrt-package/trunk/lienol/luci-app-fileassistant package/luci-app-fileassistant
+svn co https://github.com/xiaorouji/openwrt-package/trunk/lienol/luci-app-timecontrol package/luci-app-timecontrol
+svn co https://github.com/xiaorouji/openwrt-package/trunk/lienol/luci-app-filebrowser package/luci-app-filebrowser
+svn co https://github.com/xiaorouji/openwrt-package/trunk/lienol/luci-theme-argon-dark-mod package/luci-theme-argon-dark-mod
+svn co https://github.com/xiaorouji/openwrt-package/trunk/lienol/luci-theme-argon-light-mod package/luci-theme-argon-light-mod
+svn co https://github.com/xiaorouji/openwrt-package/trunk/lienol/luci-theme-bootstrap-mod package/luci-theme-bootstrap-mod
 
 # 替换更新haproxy默认版本
 rm -rf feeds/packages/net/haproxy && svn co https://github.com/Lienol/openwrt-packages/trunk/net/haproxy feeds/packages/net/haproxy
@@ -96,8 +97,8 @@ EOF
 
 # 设置固件大小:
 cat >> .config <<EOF
-CONFIG_TARGET_KERNEL_PARTSIZE=32
-CONFIG_TARGET_ROOTFS_PARTSIZE=320
+CONFIG_TARGET_KERNEL_PARTSIZE=16
+CONFIG_TARGET_ROOTFS_PARTSIZE=160
 EOF
 
 # 固件压缩:
@@ -148,6 +149,7 @@ EOF
 
 # 第三方插件选择:
 cat >> .config <<EOF
+CONFIG_PACKAGE_luci-app-timecontrol=y #自动关机
 CONFIG_PACKAGE_luci-app-oaf=y #应用过滤
 # CONFIG_PACKAGE_luci-app-openclash=y #OpenClash
 CONFIG_PACKAGE_luci-app-serverchan=y #微信推送
@@ -202,17 +204,18 @@ EOF
 
 # 常用LuCI插件:
 cat >> .config <<EOF
-CONFIG_PACKAGE_luci-app-adbyby-plus=y #adbyby去广告
+# CONFIG_PACKAGE_luci-app-adbyby-plus=y #adbyby去广告
 CONFIG_PACKAGE_luci-app-webadmin=y #Web管理页面设置
 CONFIG_PACKAGE_luci-app-ddns=y #DDNS服务
-CONFIG_DEFAULT_luci-app-vlmcsd=y #KMS激活服务器
+# CONFIG_DEFAULT_luci-app-vlmcsd=y #KMS激活服务器
 CONFIG_PACKAGE_luci-app-filetransfer=y #系统-文件传输
 CONFIG_PACKAGE_luci-app-autoreboot=y #定时重启
 CONFIG_PACKAGE_luci-app-upnp=y #通用即插即用UPnP(端口自动转发)
 CONFIG_PACKAGE_luci-app-accesscontrol=y #上网时间控制
 CONFIG_PACKAGE_luci-app-wol=y #网络唤醒
-CONFIG_PACKAGE_luci-app-frpc=y #Frp内网穿透
+# CONFIG_PACKAGE_luci-app-frpc=y #Frp内网穿透
 CONFIG_PACKAGE_luci-app-nlbwmon=y #宽带流量监控
+CONFIG_PACKAGE_luci-app-wrtbwmon=y #实时流量监测
 CONFIG_PACKAGE_luci-app-sfe=y #高通开源的 Shortcut FE 转发加速引擎
 # CONFIG_PACKAGE_luci-app-flowoffload=y #开源 Linux Flow Offload 驱动
 CONFIG_PACKAGE_luci-app-arpbind=y #IP/MAC绑定
