@@ -17,7 +17,7 @@ cd openwrt
 git clone https://github.com/kenzok8/openwrt-packages package/openwrt-packages
 git clone https://github.com/destan19/OpenAppFilter package/OpenAppFilter
 git clone https://github.com/tty228/luci-app-serverchan package/luci-app-serverchan
-# git clone https://github.com/pymumu/luci-app-smartdns package/luci-app-smartdns
+git clone https://github.com/pymumu/luci-app-smartdns package/luci-app-smartdns
 git clone https://github.com/garypang13/luci-theme-edge package/luci-theme-edge -b 18.06
 
 # 替换更新默认argon主题
@@ -152,9 +152,9 @@ cat >> .config <<EOF
 CONFIG_PACKAGE_luci-app-timecontrol=y #自动关机
 CONFIG_PACKAGE_luci-app-oaf=y #应用过滤
 # CONFIG_PACKAGE_luci-app-openclash=y #OpenClash
-CONFIG_PACKAGE_luci-app-serverchan=y #微信推送
+# CONFIG_PACKAGE_luci-app-serverchan=y #微信推送
 CONFIG_PACKAGE_luci-app-eqos=y #IP限速
-# CONFIG_PACKAGE_luci-app-smartdns=y #smartdns服务器
+CONFIG_PACKAGE_luci-app-smartdns=y #smartdns服务器
 # CONFIG_PACKAGE_luci-app-adguardhome=y #ADguardhome
 EOF
 
