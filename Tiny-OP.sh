@@ -112,15 +112,15 @@ CONFIG_EFI_IMAGES=y
 EOF
 
 # dnsmasq启用
-# cat >> .config <<EOF
-# # CONFIG_PACKAGE_dnsmasq_full=y
-# CONFIG_PACKAGE_dnsmasq_full_ipset=y
-# CONFIG_PACKAGE_kmod-ipt-ipset=y
-# # CONFIG_PACKAGE_kmod-sched-ipset is not set
-# CONFIG_PACKAGE_ipset=y
-# # CONFIG_PACKAGE_ipset-dns is not set
-# CONFIG_PACKAGE_libipset=y
-# EOF
+cat >> .config <<EOF
+# CONFIG_PACKAGE_dnsmasq_full=y
+CONFIG_PACKAGE_dnsmasq_full_ipset=y
+CONFIG_PACKAGE_kmod-ipt-ipset=y
+# CONFIG_PACKAGE_kmod-sched-ipset is not set
+CONFIG_PACKAGE_ipset=y
+# CONFIG_PACKAGE_ipset-dns is not set
+CONFIG_PACKAGE_libipset=y
+EOF
 
 # IPv6支持:
 # cat >> .config <<EOF
@@ -149,7 +149,7 @@ EOF
 
 # 第三方插件选择:
 cat >> .config <<EOF
-CONFIG_PACKAGE_luci-app-oaf=y #应用过滤
+# CONFIG_PACKAGE_luci-app-oaf=y #应用过滤
 # CONFIG_PACKAGE_luci-app-openclash=y #OpenClash
 # CONFIG_PACKAGE_luci-app-serverchan=y #微信推送
 CONFIG_PACKAGE_luci-app-eqos=y #IP限速
