@@ -31,7 +31,7 @@ env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
   DIY_SH: OpenWrt-x86-64-lean.sh
-  SSH_ACTIONS: false
+  # SSH_ACTIONS: false
   UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
   TZ: Asia/Shanghai
@@ -83,9 +83,9 @@ jobs:
         ../$DIY_SH
         make defconfig
 
-    - name: 开启SSH远程连接
-      uses: P3TERX/debugger-action@master
-      if: env.SSH_ACTIONS == 'true'
+    # - name: 开启SSH远程连接
+      # uses: P3TERX/debugger-action@master
+      # if: env.SSH_ACTIONS == 'true'
 
     - name: 下载软件包
       id: package
