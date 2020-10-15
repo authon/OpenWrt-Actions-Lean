@@ -7,7 +7,7 @@
 #
 
 
-name: OpenWrt-x86-64-Lean
+name: OpenWrt-x86-64-Lean-Tiny-OP
 
 on:
 # 定时触发(每天早4点10分)
