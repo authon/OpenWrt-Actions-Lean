@@ -12,7 +12,7 @@ name: OpenWrt-x86-64-Lean-Tiny-OP
 on:
 # 定时触发(每天早4点10分)
   schedule:
-    - cron: 10 19 * * *
+    - cron: 10 20 * * *
 
 # release触发
   release:
