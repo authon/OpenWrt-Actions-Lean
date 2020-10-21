@@ -35,9 +35,9 @@ svn co https://github.com/xiaorouji/openwrt-package/trunk/package package/small
 svn co https://github.com/xiaorouji/openwrt-package/trunk/lienol/luci-app-fileassistant package/luci-app-fileassistant
 svn co https://github.com/xiaorouji/openwrt-package/trunk/lienol/luci-app-timecontrol package/luci-app-timecontrol
 svn co https://github.com/xiaorouji/openwrt-package/trunk/lienol/luci-app-filebrowser package/luci-app-filebrowser
-svn co https://github.com/xiaorouji/openwrt-package/trunk/lienol/luci-theme-argon-dark-mod package/luci-theme-argon-dark-mod
-svn co https://github.com/xiaorouji/openwrt-package/trunk/lienol/luci-theme-argon-light-mod package/luci-theme-argon-light-mod
-svn co https://github.com/xiaorouji/openwrt-package/trunk/lienol/luci-theme-bootstrap-mod package/luci-theme-bootstrap-mod
+svn co https://github.com/authon/openwrt-package-app/trunk/luci-theme-argon-dark-mod package/luci-theme-argon-dark-mod
+svn co https://github.com/authon/openwrt-package-app/trunk/luci-theme-argon-light-mod package/luci-theme-argon-light-mod
+svn co https://github.com/authon/openwrt-package-app/trunk/luci-theme-bootstrap-mod package/luci-theme-bootstrap-mod
 
 # 替换更新haproxy默认版本
 rm -rf feeds/packages/net/haproxy && svn co https://github.com/Lienol/openwrt-packages/trunk/net/haproxy feeds/packages/net/haproxy
