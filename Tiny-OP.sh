@@ -31,6 +31,9 @@ rm -rf package/openwrt-packages/luci-app-ssr-plus && svn co https://github.com/f
 # git clone https://github.com/kenzok8/small package/small
 svn co https://github.com/xiaorouji/openwrt-package/trunk/package package/small
 
+# 替换https-dns-proxy.init文件,解决用LEDE源码加入passwall编译固件后DNS转发127.0.0.1#5053和12.0.0.1#5054问题
+curl -fsSL  https://raw.githubusercontent.com/Lienol/openwrt-packages/19.07/net/https-dns-proxy/files/https-dns-proxy.init > feeds/packages/net/https-dns-proxy/files/https-dns-proxy.init
+
 # 添加Lienol主题及软件
 svn co https://github.com/xiaorouji/openwrt-package/trunk/lienol/luci-app-fileassistant package/luci-app-fileassistant
 svn co https://github.com/xiaorouji/openwrt-package/trunk/lienol/luci-app-timecontrol package/luci-app-timecontrol
