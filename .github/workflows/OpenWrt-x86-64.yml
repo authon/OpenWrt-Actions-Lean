@@ -2,16 +2,16 @@ name: OpenWrt-x86-64-lean
 
 on:
 # 定时触发(每天早6点10分)
-  schedule:
-   - cron: 10 22 * * *
+  # schedule:
+   # - cron: 10 22 * * *
 
 # release触发
 #  release:
 #   types: [published]
 
 # 点赞触发
-  watch:
-    types: [started]
+  # watch:
+    # types: [started]
 
 # 编辑触发
 #  push:
