@@ -118,7 +118,7 @@ EOF
 
 # dnsmasq启用
 cat >> .config <<EOF
-# CONFIG_PACKAGE_dnsmasq_full=y
+CONFIG_PACKAGE_dnsmasq_full=y
 CONFIG_PACKAGE_dnsmasq_full_ipset=y
 CONFIG_PACKAGE_kmod-ipt-ipset=y
 # CONFIG_PACKAGE_kmod-sched-ipset is not set
